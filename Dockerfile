@@ -33,7 +33,7 @@ RUN pip install --upgrade pip
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-# Setup custom package
+# Install the custom package in editable mode
 COPY traditionalVSml/ ./traditionalVSml/
 COPY setup.py .
 RUN pip install -e .
@@ -57,9 +57,4 @@ EXPOSE 8501
 # ------------------------------
 # Run Streamlit App
 # ------------------------------
-CMD [
-  "streamlit", "run", "app.py",
-  "--server.headless=true",
-  "--server.port=8501",
-  "--server.address=0.0.0.0"
-]
+CMD ["streamlit", "run", "app.py", "--server.headless=true", "--server.port=8501", "--server.address=0.0.0.0"]
