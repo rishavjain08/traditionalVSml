@@ -6,7 +6,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
-from utils.traditional_model import predict_traditional
+from traditionalVSml.utils.traditional_model import predict_traditional
 
 
 def render(model_data):

@@ -4,7 +4,7 @@ import os
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from utils.data_generator import generate_ipl_data_raw
+from traditionalVSml.utils.data_generator import generate_ipl_data_raw
 
 
 def train_and_save_model(n_samples=2000, model_path='model.pkl'):

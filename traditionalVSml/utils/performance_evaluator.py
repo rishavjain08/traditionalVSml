@@ -4,8 +4,8 @@ Performance Evaluator - Evaluates Traditional and ML models on various scenarios
 import numpy as np
 import pandas as pd
 from sklearn.metrics import accuracy_score
-from utils.traditional_model import predict_traditional
-from utils.data_generator import generate_ipl_data_raw
+from traditionalVSml.utils.traditional_model import predict_traditional
+from traditionalVSml.utils.data_generator import generate_ipl_data_raw
 
 
 def evaluate_traditional_model(df):

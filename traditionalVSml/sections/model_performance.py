@@ -4,7 +4,7 @@ Shows performance comparison between Traditional and ML approaches
 """
 import streamlit as st
 import plotly.graph_objects as go
-from utils.performance_evaluator import evaluate_scenarios, generate_learning_curve
+from traditionalVSml.utils.performance_evaluator import evaluate_scenarios, generate_learning_curve
 
 
 def render(model_data, model_info):
