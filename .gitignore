@@ -1,7 +1,6 @@
 myenv
 *.egg-info
 model.pkl
-utils/__pycache__
-sections/__pycache__
-*.pyc
+*__pycache__
+*__pycache__
 .DS_Store

@@ -1,65 +1,65 @@
 # ------------------------------
-# Base Image
+# Base Image (Small & Fast)
 # ------------------------------
-FROM python:3.10-slim
+FROM python:3.11-slim
 
 # ------------------------------
-# Environment variables
+# Environment Variables
 # ------------------------------
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    STREAMLIT_SERVER_HEADLESS=true \
-    STREAMLIT_SERVER_PORT=8501 \
-    STREAMLIT_SERVER_ADDRESS=0.0.0.0
-
-# # ------------------------------
-# # System dependencies
-# # ------------------------------
-# RUN add --no-cache \
-#         gcc \
-#         g++ \
-#         musl-dev \
-#         mariadb-connector-c-dev \
-#         curl \
-#         jq \
-#         unzip \
-#         bash \
-#         net-tools \
-#         make \
-#         openssl \
-#         libffi-dev \
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
 
 # ------------------------------
-# Working directory
+# System Dependencies
+# ------------------------------
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# ------------------------------
+# Working Directory
 # ------------------------------
 WORKDIR /usr/app
 
 # ------------------------------
 # Copy dependency files first
-# (better Docker cache usage)
+# (Better Docker layer caching)
 # ------------------------------
-COPY setup.py requirements.txt README.md ./
+# Install Python Dependencies
+RUN pip install --upgrade pip
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+# Setup custom package
+COPY traditionalVSml/ ./traditionalVSml/
+COPY setup.py .
+RUN pip install -e .
 
 # ------------------------------
-# Install Python dependencies
+# Copy Application FrontEnd Code
 # ------------------------------
-RUN pip install --upgrade pip \
-    && pip install -r requirements.txt \
-    && pip install -e .
-
-# ------------------------------
-# Copy application source code
-# ------------------------------
-
-COPY utils ./utils
 COPY app.py .
 
 # ------------------------------
-# Expose Streamlit port
+# Expose Streamlit Port
 # ------------------------------
 EXPOSE 8501
 
 # ------------------------------
-# Start Streamlit
+# Health Check (K8s / ECS Friendly)
 # ------------------------------
-CMD ["streamlit", "run", "app.py"]
+# HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+#     CMD curl --fail http://localhost:8501/_stcore/health || exit 1
+
+# ------------------------------
+# Run Streamlit App
+# ------------------------------
+CMD [
+  "streamlit", "run", "app.py",
+  "--server.headless=true",
+  "--server.port=8501",
+  "--server.address=0.0.0.0"
+]
