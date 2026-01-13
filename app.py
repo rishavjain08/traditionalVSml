@@ -1,12 +1,12 @@
 import streamlit as st
 
-from utils.train_ml_model import train_and_save_model
-from utils.model_manager import load_model, model_exists, get_model_info
-from utils.common import get_custom_css, render_footer
-from sections.visual_comparison import render as render_visual_comparison
-from sections.interactive_demo import render as render_interactive_demo
-from sections.how_ml_works import render as render_how_ml_works
-from sections.model_performance import render as render_model_performance
+from traditionalVSml.utils.train_ml_model import train_and_save_model
+from traditionalVSml.utils.model_manager import load_model, model_exists, get_model_info
+from traditionalVSml.utils.common import get_custom_css, render_footer
+from traditionalVSml.sections.visual_comparison import render as render_visual_comparison
+from traditionalVSml.sections.interactive_demo import render as render_interactive_demo
+from traditionalVSml.sections.how_ml_works import render as render_how_ml_works
+from traditionalVSml.sections.model_performance import render as render_model_performance
 
 # ------------------ PAGE CONFIG ------------------
 

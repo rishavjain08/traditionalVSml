@@ -35,15 +35,11 @@ RUN apt-get update && \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install the custom package in editable mode
-COPY traditionalVSml/ ./traditionalVSml/
-COPY setup.py .
-RUN pip install -e .
-
 
 # ------------------------------
 # Copy Application FrontEnd Code
 # ------------------------------
+COPY traditionalVSml ./traditionalVSml
 COPY app.py .
 
 
