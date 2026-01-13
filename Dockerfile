@@ -3,6 +3,7 @@
 # ------------------------------
 FROM python:3.10-slim
 
+
 # ------------------------------
 # Environment Variables
 # ------------------------------
@@ -15,7 +16,8 @@ ENV PYTHONUNBUFFERED=1 \
 # ------------------------------
 # Working Directory
 # ------------------------------
-  WORKDIR /usr/app
+WORKDIR /usr/app
+
 
 # ------------------------------
 # System Dependencies
@@ -38,15 +40,18 @@ COPY traditionalVSml/ ./traditionalVSml/
 COPY setup.py .
 RUN pip install -e .
 
+
 # ------------------------------
 # Copy Application FrontEnd Code
 # ------------------------------
 COPY app.py .
 
+
 # ------------------------------
 # Expose Streamlit Port
 # ------------------------------
 EXPOSE 8501
+
 
 # ------------------------------
 # Run Streamlit App
